@@ -26,8 +26,8 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
-      className={clsx(`
-        flex
+      className={clsx(
+        `flex
         justify-center
         rounded-md
         px-3
@@ -36,8 +36,7 @@ const Button: React.FC<ButtonProps> = ({
         font-semibold
         focus-visible:outline
         focus-visible:outline-2
-        focus-visible:outline-offset-2
-      `,
+        focus-visible:outline-offset-2`,
         disabled && "opacity-50 cursor-default",
         fullWidth && "w-full",
         secondary ? "text-gray-900" : "text-white",
