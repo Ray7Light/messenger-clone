@@ -62,7 +62,7 @@ const AuthForm = () => {
           />
           <Input
             id="password"
-            label="Password"            
+            label="Password"
             type="password"
             disabled={isLoading}
             register={register}
