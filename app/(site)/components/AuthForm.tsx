@@ -48,8 +48,7 @@ const AuthForm = () => {
       axios
         .post('/api/register', data)
         .then(() => signIn('credentials', data))
-        // TODO: Assign errors to fields (use react hook forms)
-        // TODO: 500 when existing email is used.
+        // TODO: Assign errors to fields (use react hook forms)        
         .catch(() => toast.error('Something went wrong!'))
         .finally(() => setIsLoading(false));
     }
