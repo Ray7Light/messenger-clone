@@ -49,6 +49,7 @@ const AuthForm = () => {
         .post('/api/register', data)
         .then(() => signIn('credentials', data))
         // TODO: Assign errors to fields (use react hook forms)
+        // TODO: 500 when existing email is used.
         .catch(() => toast.error('Something went wrong!'))
         .finally(() => setIsLoading(false));
     }
@@ -61,6 +62,7 @@ const AuthForm = () => {
         .then((callback) => {
           // TODO: Assign errors to fields (use react hook forms)
           if (callback?.error) {
+            setIsLoading(false);
             toast.error('Invalid credentials');
             return;
           }
@@ -70,7 +72,7 @@ const AuthForm = () => {
             router.push('/users');
           }
         })
-        .finally(() => {
+        .catch(() => {
           setIsLoading(false);
         });
     }
@@ -125,7 +127,7 @@ const AuthForm = () => {
           </div>
           <div className='mt-6 flex gap-2'>
             <AuthSocialButton
-              icon={BsGithub}
+              icon={BsGithub}              
               onClick={() => socialAction('github')}
             />
             <AuthSocialButton
@@ -155,6 +157,7 @@ const AuthForm = () => {
     signIn(action, { redirect: false })
       .then((callback) => {
         if (callback?.error) {
+          setIsLoading(false);
           toast.error('Invalid credentials');
           return;
         }
@@ -164,7 +167,7 @@ const AuthForm = () => {
           router.push('/users');
         }
       })
-      .finally(() => {
+      .catch(() => {
         setIsLoading(false);
       });
   }

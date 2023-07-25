@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { Conversation, Message, User } from '@prisma/client';
 
 import { FullConversationType } from '@/app/types';
 
@@ -55,7 +54,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     return seenArray.filter((user) => user.email === userEmail).length !== 0;
   }, [userEmail, lastMessage]);
 
-  const lastMessageText = useMemo(() => {
+  const lastMessageText = useMemo(() => {    
     if (lastMessage?.image) {
       return 'Sent an image';
     }
