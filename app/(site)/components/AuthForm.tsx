@@ -27,6 +27,7 @@ const AuthForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<FieldValues>({
     defaultValues: {
       name: '',
@@ -48,8 +49,25 @@ const AuthForm = () => {
       axios
         .post('/api/register', data)
         .then(() => signIn('credentials', data))
-        // TODO: Assign errors to fields (use react hook forms)        
-        .catch(() => toast.error('Something went wrong!'))
+        .catch((error) => {
+          if (error.response.status === 400) {
+            const formErrors = error.response.data;
+
+            if (formErrors) {
+              Object.keys(formErrors).forEach((key, i) => {
+                setError(
+                  key,
+                  { message: formErrors[key] },
+                  { shouldFocus: i === 0 }
+                );
+              });
+            }
+
+            toast.error('Incorrect form data!');
+          } else {
+            toast.error('Something went wrong!');
+          }
+        })
         .finally(() => setIsLoading(false));
     }
 
@@ -126,7 +144,7 @@ const AuthForm = () => {
           </div>
           <div className='mt-6 flex gap-2'>
             <AuthSocialButton
-              icon={BsGithub}              
+              icon={BsGithub}
               onClick={() => socialAction('github')}
             />
             <AuthSocialButton
